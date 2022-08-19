@@ -1,22 +1,30 @@
 import styled from "styled-components";
-import { AccountBalanceWalletOutlinedIcon } from "../theme/layout/icons";
+import {
+  AccountBalanceWalletOutlinedIcon,
+  LinkOutlinedIcon,
+} from "../theme/layout/icons";
 
-interface WalletProps {
-  publicKey?: string;
-  privateKey?: string;
+interface BlockchainStatusProps {
+  blocksMined?: number;
+  wallets?: number;
+  transactionsProceeded?: number;
 }
 
-export function Wallet({ publicKey, privateKey }: WalletProps) {
+export function BlockchainStatus({
+  blocksMined,
+  wallets,
+  transactionsProceeded,
+}: BlockchainStatusProps) {
   return (
     <Container>
       <Header>
-        <AccountBalanceWalletOutlinedIcon />
-        <Label>Wallet</Label>
+        <LinkOutlinedIcon />
+        <Label>Blockchain Status</Label>
       </Header>
       <Content>
-        <Text>Public key:</Text>
-        <Text>Private Key:</Text>
-        <Text>Balance:</Text>
+        <Text>Blocks Mined:</Text>
+        <Text>Wallets:</Text>
+        <Text>transactions proceeded:</Text>
       </Content>
     </Container>
   );
