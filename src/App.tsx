@@ -1,31 +1,55 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 // Components
 import { Blocks, Nav, Wallet, Footer, BlockchainStatus } from "./components";
 import { AppContainer, Row } from "./theme/layout/common";
+
+type Block = {
+  timestamp: string;
+  transactions: Array<any>;
+  previousHash: string;
+  hash: string;
+  nonce: number;
+  validator: string;
+  signature: string;
+};
+
+type GetBlockResponse = {
+  data: any;
+};
 
 function App() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get(`https://localhost:1337/api/blocks`);
-        setData(response.data);
-        setError(null);
-      } catch (err: any) {
-        setError(err.message);
-        setData(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
+  async function getBlocks() {
+    try {
+      // 👇️ const data: GetUsersResponse
+      const data = await axios.get("http://localhost:1337/api/blocks", {
+        headers: {
+          Accept: "application/json",
+        },
+      });
 
-  console.log("yeah", data, error);
+      console.log(JSON.stringify(data));
+
+      // 👇️ "response status is: 200"
+      console.log("response status is: ");
+
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
+
+  getBlocks();
 
   return (
     <AppContainer>
