@@ -1,5 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { Button } from "../theme/layout/common";
 import { AccountBalanceWalletOutlinedIcon } from "../theme/layout/icons";
+import { TransactionModal } from "./TransactionModal";
 
 interface WalletProps {
   publicKey?: string;
@@ -7,18 +10,37 @@ interface WalletProps {
 }
 
 export function Wallet({ publicKey, privateKey }: WalletProps) {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
-    <Container>
-      <Header>
-        <AccountBalanceWalletOutlinedIcon />
-        <Label>Wallet</Label>
-      </Header>
-      <Content>
-        <Text>Public key:</Text>
-        <Text>Private Key:</Text>
-        <Text>Balance:</Text>
-      </Content>
-    </Container>
+    <>
+      <Container>
+        <Header>
+          <AccountBalanceWalletOutlinedIcon />
+          <Label>Wallet</Label>
+        </Header>
+        <Content>
+          <Text>Public key:</Text>
+          <Text>Private Key:</Text>
+          <Text>Balance:</Text>
+        </Content>
+        <ButtonWrapper>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpenModal(true)}
+          >
+            Make Transaction
+          </Button>
+        </ButtonWrapper>
+      </Container>{" "}
+      <TransactionModal
+        isOpen={openModal}
+        handleClose={() => {
+          setOpenModal(false);
+        }}
+      />
+    </>
   );
 }
 
@@ -53,4 +75,11 @@ const Content = styled.div`
 
 const Text = styled.h6`
   margin-top: 10px;
+`;
+
+const ButtonWrapper = styled(Button)`
+  width: 100%;
+  padding-top: 15px !important;
+  display: grid;
+  place-items: center;
 `;

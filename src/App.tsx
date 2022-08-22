@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import axios from "axios";
 // Components
 import { Blocks, Nav, Wallet, Footer, BlockchainStatus } from "./components";
 import { AppContainer, Row } from "./theme/layout/common";
@@ -15,27 +15,40 @@ type Block = {
 };
 
 type GetBlockResponse = {
-  data: any;
+  data: Block[];
 };
 
 function App() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [blocks, setBlocks] = useState([]);
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    getBlocks()
+      .then((response: any) => {
+        setBlocks(response);
+      })
+      .catch((e) => {
+        setError(e);
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   async function getBlocks() {
     try {
-      // 👇️ const data: GetUsersResponse
-      const data = await axios.get("http://localhost:1337/api/blocks", {
-        headers: {
-          Accept: "application/json",
-        },
-      });
+      const { data, status } = await axios.get<GetBlockResponse>(
+        "http://localhost:1337/api/blocks",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
 
-      console.log(JSON.stringify(data));
-
-      // 👇️ "response status is: 200"
-      console.log("response status is: ");
+      console.log("response status is: ", status);
 
       return data;
     } catch (error) {
@@ -49,8 +62,6 @@ function App() {
     }
   }
 
-  getBlocks();
-
   return (
     <AppContainer>
       <Nav />
@@ -58,7 +69,7 @@ function App() {
         <Wallet />
         <BlockchainStatus />
       </Row>
-      <Blocks />
+      <Blocks blocks={blocks} />
       <Footer />
     </AppContainer>
   );

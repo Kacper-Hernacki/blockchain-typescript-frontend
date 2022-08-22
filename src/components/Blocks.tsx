@@ -1,15 +1,23 @@
 import styled from "styled-components";
 import { WidgetsOutlinedIcon } from "../theme/layout/icons";
-interface BlocksProps {}
+import { Block } from "./Block";
 
-export function Blocks({}: BlocksProps) {
+interface BlocksProps {
+  blocks: Array<any>;
+}
+
+export function Blocks({ blocks }: BlocksProps) {
   return (
     <Container>
       <Header>
         <WidgetsOutlinedIcon />
         <Label>Blocks</Label>
       </Header>
-      <Content></Content>
+      <Content>
+        {blocks?.map((block) => {
+          return <Block data={block} />;
+        })}
+      </Content>
     </Container>
   );
 }
@@ -17,6 +25,7 @@ export function Blocks({}: BlocksProps) {
 const Container = styled.div`
   background-color: #235093b8;
   display: flex;
+  flex-direction: column;
   padding: 10px;
   margin: 20px;
   border-radius: 16px;
