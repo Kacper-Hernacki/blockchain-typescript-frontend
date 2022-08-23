@@ -11,7 +11,7 @@ interface TransactionModalProps {
 
 type FormValues = {
   to: string;
-  amount: number;
+  amount: string;
   type: string;
 };
 
@@ -44,11 +44,15 @@ export function TransactionModal({
   } = useForm<FormValues>({ resolver });
 
   async function createTransaction({ formData }: any) {
-    console.log(formData);
+    const json = {
+      to: formData?.to,
+      amount: Number(formData?.amount),
+      type: formData?.type,
+    };
     try {
-      const data = axios.post<CreateTransactionResponse>(
-        "http://localhost:1337/api/transact",
-        { formData },
+      const data = await axios.post<CreateTransactionResponse>(
+        "http://localhost:1338/api/transact",
+        json,
         {
           headers: {
             Accept: "application/json",

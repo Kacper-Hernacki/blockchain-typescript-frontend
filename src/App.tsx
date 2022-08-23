@@ -40,7 +40,7 @@ function App() {
   async function getBlocks() {
     try {
       const { data, status } = await axios.get<GetBlockResponse>(
-        "http://localhost:1337/api/blocks",
+        "http://localhost:1338/api/blocks",
         {
           headers: {
             Accept: "application/json",
