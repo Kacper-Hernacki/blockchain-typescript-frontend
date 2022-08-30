@@ -20,6 +20,7 @@ type GetBlockResponse = {
 
 function App() {
   const [blocks, setBlocks] = useState([]);
+  const [wallet, setWallet] = useState<any>({});
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -30,6 +31,14 @@ function App() {
       })
       .catch((e) => {
         setError(e);
+      });
+
+    getWallet()
+      .then((response: any) => {
+        setWallet(response);
+      })
+      .catch((e) => {
+        console.log(e);
       });
 
     return () => {
@@ -62,11 +71,40 @@ function App() {
     }
   }
 
+  async function getWallet() {
+    try {
+      const { data, status } = await axios.get<GetBlockResponse>(
+        "http://localhost:1338/api/wallet",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      console.log("response status is: ", status);
+
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
+
   return (
     <AppContainer>
       <Nav />
       <Row>
-        <Wallet />
+        <Wallet
+          publicKey={wallet.publicKey}
+          privateKey={wallet.privateKey}
+          balance={wallet.balance}
+        />
         <BlockchainStatus />
       </Row>
       <Blocks blocks={blocks} />

@@ -5,11 +5,12 @@ import { AccountBalanceWalletOutlinedIcon } from "../theme/layout/icons";
 import { TransactionModal } from "./TransactionModal";
 
 interface WalletProps {
-  publicKey?: string;
-  privateKey?: string;
+  publicKey: string;
+  privateKey: string;
+  balance: number;
 }
 
-export function Wallet({ publicKey, privateKey }: WalletProps) {
+export function Wallet({ publicKey, privateKey, balance }: WalletProps) {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -20,9 +21,9 @@ export function Wallet({ publicKey, privateKey }: WalletProps) {
           <Label>Wallet</Label>
         </Header>
         <Content>
-          <Text>Public key:</Text>
-          <Text>Private Key:</Text>
-          <Text>Balance:</Text>
+          <Text>Public key: {publicKey} </Text>
+          <Text>Private Key: {privateKey}</Text>
+          <Text>Balance: {balance}</Text>
         </Content>
         <ButtonWrapper>
           <Button
@@ -51,6 +52,7 @@ const Container = styled.div`
   margin: 10px;
   padding: 10px;
   border-radius: 16px;
+  word-wrap: break-word;
 
   svg {
     font-size: 24px;
