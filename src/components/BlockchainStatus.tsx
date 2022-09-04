@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import {
-  AccountBalanceWalletOutlinedIcon,
-  LinkOutlinedIcon,
-} from "../theme/layout/icons";
+import { LinkOutlinedIcon } from "../theme/layout/icons";
 
 interface BlockchainStatusProps {
   blocksMined?: number;
@@ -29,7 +26,7 @@ export function BlockchainStatus({
           Wallets: <span>{wallets}</span>
         </Text>
         <Text>
-          transactions proceeded: <span>{transactionsProceeded}</span>{" "}
+          transactions proceeded: <span>{transactionsProceeded}</span>
         </Text>
       </Content>
     </Container>
@@ -37,8 +34,8 @@ export function BlockchainStatus({
 }
 
 const Container = styled.div`
-  height: 200px;
-  width: 300px;
+  height: 300px;
+  width: 400px;
   background-color: #235093b8;
   margin: 10px;
   padding: 10px;

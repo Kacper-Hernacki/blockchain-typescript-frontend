@@ -40,7 +40,7 @@ export function Wallet({ publicKey, privateKey, balance }: WalletProps) {
             Make Transaction
           </Button>
         </ButtonWrapper>
-      </Container>{" "}
+      </Container>
       <TransactionModal
         isOpen={openModal}
         handleClose={() => {
@@ -52,8 +52,8 @@ export function Wallet({ publicKey, privateKey, balance }: WalletProps) {
 }
 
 const Container = styled.div`
-  height: 200px;
-  width: 300px;
+  height: 300px;
+  width: 400px;
   background-color: #235093b8;
   margin: 10px;
   padding: 10px;

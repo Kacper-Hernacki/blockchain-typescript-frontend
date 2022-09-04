@@ -4,6 +4,7 @@ import axios from "axios";
 import { Blocks, Nav, Wallet, Footer, BlockchainStatus } from "./components";
 import { AppContainer, Button, Row } from "./theme/layout/common";
 import styled from "styled-components";
+import { WalletModal } from "./components/walletModal";
 
 type Block = {
   timestamp: string;
@@ -58,7 +59,9 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [walletsPool, setWalletsPool] = useState([]);
   const [wallet, setWallet] = useState<any>({});
-  const [error, setError] = useState();
+  const [openModal, setOpenModal] = useState(false);
+  const [authenticationWalletModal, setAuthenticationWalletModal] =
+    useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -67,12 +70,12 @@ function App() {
         setBlocks(response);
       })
       .catch((e) => {
-        setError(e);
+        console.log(e);
       });
 
     getWallet()
       .then((response: any) => {
-        //setWallet(response);
+        // setWallet(response);
         setWallet(null);
       })
       .catch((e) => {
@@ -83,6 +86,7 @@ function App() {
       .then((response: any) => {
         setWalletsPool(response);
       })
+
       .catch((e) => {
         console.log(e);
       });
@@ -210,6 +214,7 @@ function App() {
           },
         }
       );
+      setOpenModal(true);
 
       return data;
     } catch (error) {
@@ -238,8 +243,25 @@ function App() {
             <Button variant="contained" color="primary" onClick={createWallet}>
               Create Wallet
             </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                setOpenModal(true);
+                setAuthenticationWalletModal(true);
+              }}
+            >
+              Already have a wallet
+            </Button>
           </ButtonWrapper>
         )}
+        <WalletModal
+          isOpen={openModal}
+          handleClose={() => {
+            setOpenModal(false);
+          }}
+          authentcation={authenticationWalletModal}
+        />
         <BlockchainStatus
           blocksMined={blocks?.length}
           transactionsProceeded={transactions?.length}
@@ -253,8 +275,8 @@ function App() {
 }
 
 const ButtonWrapper = styled.div`
-  height: 200px;
-  width: 300px;
+  height: 300px;
+  width: 400px;
   background-color: #235093b8;
   margin: 10px;
   padding: 10px;
