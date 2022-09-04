@@ -21,9 +21,15 @@ export function Wallet({ publicKey, privateKey, balance }: WalletProps) {
           <Label>Wallet</Label>
         </Header>
         <Content>
-          <Text>Public key: {publicKey} </Text>
-          <Text>Private Key: {privateKey}</Text>
-          <Text>Balance: {balance}</Text>
+          <Text>
+            Public key:<span>{publicKey} </span>
+          </Text>
+          <Text>
+            Private key: <span>{privateKey}</span>
+          </Text>
+          <Text>
+            Balance: <span>{balance}</span>
+          </Text>
         </Content>
         <ButtonWrapper>
           <Button
@@ -54,6 +60,10 @@ const Container = styled.div`
   border-radius: 16px;
   word-wrap: break-word;
 
+  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+
   svg {
     font-size: 24px;
     color: #19283d;
@@ -77,6 +87,11 @@ const Content = styled.div`
 
 const Text = styled.h6`
   margin-top: 10px;
+
+  span {
+    color: #ededed;
+    font-weight: 500;
+  }
 `;
 
 const ButtonWrapper = styled(Button)`

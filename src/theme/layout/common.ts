@@ -18,6 +18,11 @@ export const Button = styled(MuiButton)``;
 
 export const Modal = styled(MuiModal)``;
 
+export const Link = styled.a`
+  text-decoration: none;
+  color: black;
+`;
+
 export const Box = styled(MuiBox)`
   position: absolute;
   top: 50%;

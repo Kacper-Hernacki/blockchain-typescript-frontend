@@ -27,10 +27,18 @@ export function Block({ data }: BlockProps) {
 
   return (
     <Container>
-      <Text>timestamp: {timestamp}</Text>
-      <Text>previous hash: {previousHash}</Text>
-      <Text>hash: {hash}</Text>
-      <Text>signature: {signature}</Text>
+      <Text>
+        timestamp: <span>{timestamp}</span>
+      </Text>
+      <Text>
+        previous hash: <span>{previousHash}</span>
+      </Text>
+      <Text>
+        hash: <span>{hash}</span>
+      </Text>
+      <Text>
+        signature:<span> {signature}</span>
+      </Text>
     </Container>
   );
 }
@@ -51,4 +59,9 @@ const Text = styled.h6`
   width: 100%;
   word-wrap: break-word;
   margin-bottom: 5px;
+
+  span {
+    color: #ededed;
+    font-weight: 500;
+  }
 `;

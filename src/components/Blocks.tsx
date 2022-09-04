@@ -30,6 +30,10 @@ const Container = styled.div`
   margin: 20px;
   border-radius: 16px;
 
+  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+
   svg {
     font-size: 24px;
     color: #19283d;
@@ -49,4 +53,5 @@ const Label = styled.h3`
 
 const Content = styled.div`
   margin-top: 20px;
+  display: flex;
 `;

@@ -22,9 +22,15 @@ export function BlockchainStatus({
         <Label>Blockchain Status</Label>
       </Header>
       <Content>
-        <Text>Blocks Mined:</Text>
-        <Text>Wallets:</Text>
-        <Text>transactions proceeded:</Text>
+        <Text>
+          Blocks Mined: <span>{blocksMined}</span>
+        </Text>
+        <Text>
+          Wallets: <span>{wallets}</span>
+        </Text>
+        <Text>
+          transactions proceeded: <span>{transactionsProceeded}</span>{" "}
+        </Text>
       </Content>
     </Container>
   );
@@ -37,6 +43,10 @@ const Container = styled.div`
   margin: 10px;
   padding: 10px;
   border-radius: 16px;
+
+  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
 
   svg {
     font-size: 24px;
@@ -61,4 +71,9 @@ const Content = styled.div`
 
 const Text = styled.h6`
   margin-top: 10px;
+
+  span {
+    color: #ededed;
+    font-weight: 500;
+  }
 `;

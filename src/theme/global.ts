@@ -8,6 +8,10 @@ const GlobalStyle = createGlobalStyle`
         box-sizing:border-box;
         font-family: 'Open Sans', sans-serif; 
     }
+
+    body{
+        background-color: #cad3de;
+    }
     #root{
         margin:0 auto;
     }`;
