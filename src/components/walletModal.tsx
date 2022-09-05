@@ -47,25 +47,25 @@ export function WalletModal({
   useEffect(() => {
     const controller = new AbortController();
 
-    if (!authentcation) {
-      getWallet()
-        .then((response: any) => {
-          setWallet(response);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
+    // if (!authentcation) {
+    //   getWallet()
+    //     .then((response: any) => {
+    //       setWallet(response);
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // }
 
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [wallet]);
 
-  async function getWallet() {
+  async function getWallet(privateKey: string) {
     try {
       const { data } = await axios.get<GetWalletResponse>(
-        "http://localhost:1338/api/wallet",
+        `http://localhost:1338/api/wallet?privateKey=${privateKey}`,
         {
           headers: {
             Accept: "application/json",
@@ -85,7 +85,16 @@ export function WalletModal({
     }
   }
 
-  const onSubmit = handleSubmit((formData) => {});
+  const onSubmit = handleSubmit((formData) => {
+    getWallet(formData?.privateKey)
+      .then((response: any) => {
+        setWallet(response);
+        handleClose();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
 
   return (
     <Modal open={isOpen} onClose={handleClose}>
