@@ -29,8 +29,6 @@ export function Footer({}: FooterProps) {
 }
 
 const Container = styled.div`
-  position: absolute;
-  bottom: 0;
   height: 150px;
   width: 100%;
   background-color: transparent;

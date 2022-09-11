@@ -25,6 +25,7 @@ export function Blocks({ blocks }: BlocksProps) {
 const Container = styled.div`
   background-color: #235093b8;
   display: flex;
+
   flex-direction: column;
   padding: 10px;
   margin: 20px;
@@ -54,4 +55,5 @@ const Label = styled.h3`
 const Content = styled.div`
   margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
 `;

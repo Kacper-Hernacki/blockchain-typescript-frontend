@@ -50,8 +50,8 @@ const Container = styled.div`
   padding: 10px;
   margin: 20px;
   border-radius: 16px;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
 `;
 
 const Text = styled.h6`

@@ -42,6 +42,7 @@ export function Wallet({ publicKey, privateKey, balance }: WalletProps) {
         </ButtonWrapper>
       </Container>
       <TransactionModal
+        publicKey={publicKey}
         isOpen={openModal}
         handleClose={() => {
           setOpenModal(false);

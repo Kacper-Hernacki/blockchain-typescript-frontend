@@ -7,6 +7,7 @@ import axios from "axios";
 interface TransactionModalProps {
   isOpen: boolean;
   handleClose: any;
+  publicKey: string;
 }
 
 type FormValues = {
@@ -36,6 +37,7 @@ const resolver: Resolver<FormValues> = async (values) => {
 export function TransactionModal({
   isOpen,
   handleClose,
+  publicKey,
 }: TransactionModalProps) {
   const {
     register,
@@ -48,6 +50,7 @@ export function TransactionModal({
       to: formData?.to,
       amount: Number(formData?.amount),
       type: formData?.type,
+      publicKey: publicKey,
     };
     try {
       const data = await axios.post<CreateTransactionResponse>(

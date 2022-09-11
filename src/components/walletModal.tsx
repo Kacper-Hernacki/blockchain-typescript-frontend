@@ -8,6 +8,8 @@ interface WalletModalProps {
   isOpen: boolean;
   handleClose: any;
   authentcation: boolean;
+  lastlyCreatedWallet: any;
+  authenticateWallet: Function;
 }
 
 type GetWalletResponse = {
@@ -36,6 +38,8 @@ export function WalletModal({
   isOpen,
   handleClose,
   authentcation,
+  lastlyCreatedWallet,
+  authenticateWallet,
 }: WalletModalProps) {
   const [wallet, setWallet] = useState<any>({});
   const {
@@ -47,15 +51,8 @@ export function WalletModal({
   useEffect(() => {
     const controller = new AbortController();
 
-    // if (!authentcation) {
-    //   getWallet()
-    //     .then((response: any) => {
-    //       setWallet(response);
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // }
+    if (!authentcation) {
+    }
 
     return () => {
       controller.abort();
@@ -89,14 +86,13 @@ export function WalletModal({
     getWallet(formData?.privateKey)
       .then((response: any) => {
         setWallet(response);
+        authenticateWallet(response);
         handleClose();
       })
       .catch((e) => {
         console.log(e);
       });
   });
-
-  console.log(wallet);
 
   return (
     <Modal open={isOpen} onClose={handleClose}>
@@ -112,13 +108,13 @@ export function WalletModal({
       ) : (
         <StyledBox>
           <Text>
-            Public key:<span>{wallet?.publicKey} </span>
+            Public key:<span>{lastlyCreatedWallet?.publicKey} </span>
           </Text>
           <Text>
-            Private key: <span>{wallet?.privateKey}</span>
+            Private key: <span>{lastlyCreatedWallet?.privateKey}</span>
           </Text>
           <Text>
-            Balance: <span>{wallet?.balance}</span>
+            Balance: <span>{lastlyCreatedWallet?.balance}</span>
           </Text>
         </StyledBox>
       )}

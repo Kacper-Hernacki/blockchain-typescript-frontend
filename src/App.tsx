@@ -8,8 +8,12 @@ import { RootState } from "./app/store";
 import { Blocks, Nav, Wallet, Footer, BlockchainStatus } from "./components";
 import { AppContainer, Button, Row } from "./theme/layout/common";
 import styled from "styled-components";
-import { WalletModal } from "./components/walletModal";
-import { addAuthenticatedWallet } from "./features/wallet/walletSlice";
+
+import {
+  addAuthenticatedWallet,
+  addWallet,
+} from "./features/wallet/walletSlice";
+import { WalletModal } from "./components/WalletModal";
 
 type Block = {
   timestamp: string;
@@ -67,11 +71,17 @@ function App() {
 
   const wallets = useSelector((state: RootState) => state.wallets.walletsPool);
 
-  function addWallet(lastlyCreatedWallet: object) {
-    dispatch(addAuthenticatedWallet(lastlyCreatedWallet));
+  const authenticatedWallet = useSelector(
+    (state: RootState) => state.wallets.authenticatedWallet
+  );
+
+  function addNewWallet(lastlyCreatedWallet: object) {
+    dispatch(addWallet(lastlyCreatedWallet));
   }
 
-  console.log(lastlyCreatedWallet, wallets);
+  function authenticateWallet(wallet: object) {
+    dispatch(addAuthenticatedWallet(wallet));
+  }
 
   const [blocks, setBlocks] = useState([]);
   const [transactions, setTransactions] = useState([]);
@@ -233,8 +243,7 @@ function App() {
         }
       );
       setOpenModal(true);
-      console.log(data?.data);
-      addWallet(data?.data);
+      addNewWallet(data?.data);
 
       return data;
     } catch (error) {
@@ -248,34 +257,44 @@ function App() {
     }
   }
 
+  function isEmpty(obj: object) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   return (
     <AppContainer>
       <Nav />
       <Row>
-        {wallet ? (
+        {!isEmpty(authenticatedWallet) ? (
           <Wallet
-            publicKey={wallet?.publicKey}
-            privateKey={wallet?.privateKey}
-            balance={wallet?.balance}
+            publicKey={authenticatedWallet?.publicKey}
+            privateKey={authenticatedWallet?.privateKey}
+            balance={authenticatedWallet?.balance}
           />
         ) : (
           <ButtonWrapper>
             <Button variant="contained" color="primary" onClick={createWallet}>
               Create Wallet
             </Button>
-            <Button
+            <StyledButton
               variant="contained"
-              color="secondary"
               onClick={() => {
                 setOpenModal(true);
                 setAuthenticationWalletModal(true);
               }}
             >
               Already have a wallet
-            </Button>
+            </StyledButton>
           </ButtonWrapper>
         )}
         <WalletModal
+          authenticateWallet={authenticateWallet}
+          lastlyCreatedWallet={lastlyCreatedWallet}
           isOpen={openModal}
           handleClose={() => {
             setOpenModal(false);
@@ -301,12 +320,21 @@ const ButtonWrapper = styled.div`
   margin: 10px;
   padding: 10px;
   border-radius: 16px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  button {
+    margin: 10px;
+  }
 
   -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+`;
+
+const StyledButton = styled(Button)`
+  background-color: #31323d !important;
 `;
 
 export default App;
