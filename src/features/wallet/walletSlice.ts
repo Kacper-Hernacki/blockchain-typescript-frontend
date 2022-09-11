@@ -3,26 +3,28 @@ import type { RootState } from "../../app/store";
 
 // Define a type for the slice state
 interface WalletState {
-  wallet: Array<object>;
+  walletsPool: Array<object>;
+  wallet: object;
 }
 
 // Define the initial state using that type
 const initialState: WalletState = {
-  wallet: [],
+  walletsPool: [],
+  wallet: {},
 };
 
 export const walletSlice = createSlice({
-  name: "usersWallet",
+  name: "wallets",
   initialState,
   reducers: {
     addAuthenticatedWallet: (state, action: PayloadAction<object>) => {
-      state.wallet.push(action.payload);
+      state.walletsPool.push(action.payload);
     },
   },
 });
 
 export const { addAuthenticatedWallet } = walletSlice.actions;
 
-export const checkWallet = (state: RootState) => state.wallet;
+export const checkWallet = (state: RootState) => state.wallets;
 
 export default walletSlice.reducer;

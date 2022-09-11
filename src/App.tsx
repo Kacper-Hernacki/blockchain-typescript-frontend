@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "./app/store";
+
 // Components
 import { Blocks, Nav, Wallet, Footer, BlockchainStatus } from "./components";
 import { AppContainer, Button, Row } from "./theme/layout/common";
 import styled from "styled-components";
 import { WalletModal } from "./components/walletModal";
+import { addAuthenticatedWallet } from "./features/wallet/walletSlice";
 
 type Block = {
   timestamp: string;
@@ -55,6 +60,19 @@ type GetWalletResponse = {
 };
 
 function App() {
+  const lastlyCreatedWallet = useSelector(
+    (state: RootState) => state.wallets.wallet
+  );
+  const dispatch = useDispatch();
+
+  const wallets = useSelector((state: RootState) => state.wallets.walletsPool);
+
+  function addWallet(lastlyCreatedWallet: object) {
+    dispatch(addAuthenticatedWallet(lastlyCreatedWallet));
+  }
+
+  console.log(lastlyCreatedWallet, wallets);
+
   const [blocks, setBlocks] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [walletsPool, setWalletsPool] = useState([]);
@@ -215,6 +233,8 @@ function App() {
         }
       );
       setOpenModal(true);
+      console.log(data?.data);
+      addWallet(data?.data);
 
       return data;
     } catch (error) {

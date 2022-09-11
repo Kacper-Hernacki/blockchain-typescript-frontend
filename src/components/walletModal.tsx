@@ -96,6 +96,8 @@ export function WalletModal({
       });
   });
 
+  console.log(wallet);
+
   return (
     <Modal open={isOpen} onClose={handleClose}>
       {authentcation ? (
